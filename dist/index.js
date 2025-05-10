@@ -1064,12 +1064,16 @@ var WebSocketShard = class extends import_async_event_emitter.AsyncEventEmitter 
     }
   }
   onError(error) {
-    if ("code" in error && KnownNetworkErrorCodes.has(error.code)) {
+    /*if ("code" in error && KnownNetworkErrorCodes.has(error.code)) {
       this.debug(["Failed to connect to the gateway URL specified due to a network error"]);
       this.failedToConnectDueToNetworkError = true;
       return;
     }
-    this.emit("error" /* Error */, { error });
+    this.emit("error" /* Error *//*, { error });*/
+    // in bun "error" may be undefined
+    this.debug(["Failed to connect to the gateway URL specified due to a network error"]);
+    this.failedToConnectDueToNetworkError = true;
+    return;
   }
   async onClose(code) {
     this.emit("closed" /* Closed */, { code });
